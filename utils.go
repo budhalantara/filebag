@@ -49,7 +49,10 @@ func GetFileMetadata(url string) (res FileMetadata, err error) {
 			return res, nil
 		}
 
-		res.FileName = r.FindStringSubmatch(headerContentDisposition)[1]
+		extracted := r.FindStringSubmatch(headerContentDisposition)
+		if len(extracted) > 1 {
+			res.FileName = extracted[1]
+		}
 	}
 
 	return res, err
