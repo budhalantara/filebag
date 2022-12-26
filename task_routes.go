@@ -25,4 +25,15 @@ func TaskRoutes(e *echo.Echo) {
 
 		return c.NoContent(http.StatusCreated)
 	})
+
+	e.GET("/api/tasks", func(c echo.Context) error {
+		res, ae := taskService.GetAll(c.Request().Context())
+		if ae != nil {
+			return ae.ToApiResponse(c)
+		}
+
+		return c.JSON(http.StatusOK, ApiResponse{
+			Data: res,
+		})
+	})
 }

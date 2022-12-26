@@ -44,3 +44,26 @@ func (TaskRepo) Create(ctx context.Context, task TaskRepo_CreateParams) *AppErro
 
 	return nil
 }
+
+func (TaskRepo) FindAll(ctx context.Context) ([]TaskRepo_Task, *AppError) {
+	res := []TaskRepo_Task{}
+	err := db.SelectContext(ctx, &res, `
+		SELECT
+			id,
+			url,
+			raw_url,
+			file_name,
+			file_size,
+			connection_count,
+			status,
+			created_at
+		FROM tasks
+		ORDER BY id DESC
+	`)
+	if err != nil {
+		logger.Trace(err)
+		return res, NewAppError()
+	}
+
+	return res, nil
+}

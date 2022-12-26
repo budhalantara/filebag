@@ -36,3 +36,17 @@ func (TaskService) Create(ctx context.Context, req TaskRequest) *AppError {
 
 	return nil
 }
+
+func (TaskService) GetAll(ctx context.Context) ([]TaskService_Task, *AppError) {
+	res := []TaskService_Task{}
+	tasks, ae := taskRepo.FindAll(ctx)
+	if ae != nil {
+		return res, ae
+	}
+
+	for _, task := range tasks {
+		res = append(res, TaskService_Task(task))
+	}
+
+	return res, nil
+}
