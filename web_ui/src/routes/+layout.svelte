@@ -4,7 +4,7 @@
 
 <div class="drawer drawer-mobile">
 	<input id="my-drawer" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content">
+	<div class="drawer-content pl-4">
 		<slot />
 		<label for="my-drawer" class="btn btn-primary drawer-button lg:hidden">Show Sidebar</label>
 	</div>

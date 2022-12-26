@@ -1,7 +1,7 @@
 <script lang="ts">
 	import task from '$lib/services/task';
 	import type { Task } from '$lib/types/task';
-	import { FileEarmarkPlus } from 'svelte-bootstrap-icons';
+	import AddTask from './AddTask.svelte';
 
 	let tasks: Task[] = [];
 
@@ -17,10 +17,7 @@
 	<h2>Download List</h2>
 </div>
 
-<button class="btn btn-primary btn-sm mb-4">
-	<FileEarmarkPlus class="mr-1" />
-	New
-</button>
+<AddTask on:added={load} />
 
 <div class="overflow-x-auto">
 	<table class="table table-compact w-full">

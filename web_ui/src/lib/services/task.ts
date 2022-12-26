@@ -1,5 +1,5 @@
 import axios from '$lib/axios';
-import type { Task, TaskResponse } from '$lib/types/task';
+import type { CreateTaskParams, Task, TaskResponse } from '$lib/types/task';
 import dayjs from 'dayjs';
 import byteSize from 'byte-size';
 
@@ -16,4 +16,8 @@ async function getAll(): Promise<Task[]> {
 	});
 }
 
-export default { getAll };
+async function create(params: CreateTaskParams) {
+	await axios.post('/api/tasks', params);
+}
+
+export default { getAll, create };

@@ -19,3 +19,9 @@ export type Task = {
 	status: string;
 	date: string;
 };
+
+export type CreateTaskParams = {
+	url: string;
+	raw_url: string;
+	connection_count: number;
+};
