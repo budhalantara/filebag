@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"log"
@@ -18,7 +18,7 @@ func NewLogger() *Logger {
 	}
 }
 
-var logger = NewLogger()
+var Log = NewLogger()
 
 func (l *Logger) Trace(err error) {
 	newError := errors.New(err.Error())

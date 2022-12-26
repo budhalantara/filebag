@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"net/http"
@@ -6,19 +6,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type (
-	AppError struct {
-		Code    int
-		Message string
-		Errors  []string
-	}
-
-	ApiResponse struct {
-		Message string      `json:"message,omitempty"`
-		Data    interface{} `json:"data,omitempty"`
-		Errors  []string    `json:"errors,omitempty"`
-	}
-)
+type AppError struct {
+	Code    int
+	Message string
+	Errors  []string
+}
 
 func NewAppError() *AppError {
 	code := http.StatusInternalServerError

@@ -1,15 +1,17 @@
-package main
+package task
 
 import (
 	"context"
 	"time"
+
+	"github.com/budhalantara/filebag/pkg"
 )
 
 type TaskRepo struct{}
 
 var taskRepo = TaskRepo{}
 
-func (TaskRepo) Create(ctx context.Context, task TaskRepo_CreateParams) *AppError {
+func (TaskRepo) Create(ctx context.Context, task Repo_CreateParams) *pkg.AppError {
 	if task.CreatedAt == 0 {
 		task.CreatedAt = time.Now().Unix()
 	}
@@ -18,7 +20,7 @@ func (TaskRepo) Create(ctx context.Context, task TaskRepo_CreateParams) *AppErro
 		task.Status = TaskStatusPending
 	}
 
-	_, err := db.NamedExecContext(ctx, `
+	_, err := pkg.DB.NamedExecContext(ctx, `
 		INSERT INTO tasks (
 			url,
 			raw_url,
@@ -38,16 +40,16 @@ func (TaskRepo) Create(ctx context.Context, task TaskRepo_CreateParams) *AppErro
 		)
 	`, task)
 	if err != nil {
-		logger.Trace(err)
-		return NewAppError()
+		pkg.Log.Trace(err)
+		return pkg.NewAppError()
 	}
 
 	return nil
 }
 
-func (TaskRepo) FindAll(ctx context.Context) ([]TaskRepo_Task, *AppError) {
-	res := []TaskRepo_Task{}
-	err := db.SelectContext(ctx, &res, `
+func (TaskRepo) FindAll(ctx context.Context) ([]Repo_Task, *pkg.AppError) {
+	res := []Repo_Task{}
+	err := pkg.DB.SelectContext(ctx, &res, `
 		SELECT
 			id,
 			url,
@@ -61,8 +63,8 @@ func (TaskRepo) FindAll(ctx context.Context) ([]TaskRepo_Task, *AppError) {
 		ORDER BY id DESC
 	`)
 	if err != nil {
-		logger.Trace(err)
-		return res, NewAppError()
+		pkg.Log.Trace(err)
+		return res, pkg.NewAppError()
 	}
 
 	return res, nil

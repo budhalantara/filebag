@@ -1,4 +1,6 @@
-package main
+package task
+
+import "github.com/budhalantara/filebag/pkg"
 
 const (
 	TaskStatusPending  = "pending"
@@ -8,14 +10,14 @@ const (
 )
 
 type (
-	TaskRequest struct {
+	Request struct {
 		Url             string `json:"url"`
 		RawUrl          string `json:"raw_url"`
 		FileName        string `json:"file_name"`
 		ConnectionCount int    `json:"connection_count"`
 	}
 
-	TaskRepo_CreateParams struct {
+	Repo_CreateParams struct {
 		Url             string `db:"url"`
 		RawUrl          string `db:"raw_url"`
 		FileName        string `db:"file_name"`
@@ -25,7 +27,7 @@ type (
 		CreatedAt       int64  `db:"created_at"`
 	}
 
-	TaskRepo_Task struct {
+	Repo_Task struct {
 		ID              int    `db:"id"`
 		Url             string `db:"url"`
 		RawUrl          string `db:"raw_url"`
@@ -36,7 +38,7 @@ type (
 		CreatedAt       int64  `db:"created_at"`
 	}
 
-	TaskService_Task struct {
+	Service_Task struct {
 		ID              int    `json:"id"`
 		Url             string `json:"url"`
 		RawUrl          string `json:"raw_url"`
@@ -48,7 +50,7 @@ type (
 	}
 )
 
-func (req TaskRequest) Validate() *AppError {
+func (req Request) Validate() *pkg.AppError {
 	errors := []string{}
 
 	if req.Url == "" {
@@ -60,7 +62,7 @@ func (req TaskRequest) Validate() *AppError {
 	}
 
 	if len(errors) > 0 {
-		return NewAppError_BadRequest("ValidationError", errors)
+		return pkg.NewAppError_BadRequest("ValidationError", errors)
 	}
 
 	return nil

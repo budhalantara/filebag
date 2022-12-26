@@ -1,19 +1,19 @@
-package main
+package pkg
 
 import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var db *sqlx.DB
+var DB *sqlx.DB
 
-func setupDB() {
-	_db, err := sqlx.Connect("sqlite3", "./filebag.db")
+func SetupDB() {
+	db, err := sqlx.Connect("sqlite3", "./filebag.db")
 	if err != nil {
-		logger.Fatal(err)
+		Log.Fatal(err)
 	}
 
-	db = _db
+	DB = db
 
 	_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS tasks (
@@ -29,6 +29,6 @@ func setupDB() {
 	`)
 
 	if err != nil {
-		logger.Fatal(err)
+		Log.Fatal(err)
 	}
 }

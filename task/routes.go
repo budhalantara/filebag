@@ -1,14 +1,15 @@
-package main
+package task
 
 import (
 	"net/http"
 
+	"github.com/budhalantara/filebag/pkg"
 	"github.com/labstack/echo/v4"
 )
 
-func TaskRoutes(e *echo.Echo) {
+func Routes(e *echo.Echo) {
 	e.POST("/api/tasks", func(c echo.Context) error {
-		req := TaskRequest{}
+		req := Request{}
 		if err := c.Bind(&req); err != nil {
 			return err
 		}
@@ -32,7 +33,7 @@ func TaskRoutes(e *echo.Echo) {
 			return ae.ToApiResponse(c)
 		}
 
-		return c.JSON(http.StatusOK, ApiResponse{
+		return c.JSON(http.StatusOK, pkg.ApiResponse{
 			Data: res,
 		})
 	})

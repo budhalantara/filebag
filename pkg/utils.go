@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"crypto/md5"
@@ -22,6 +22,15 @@ type FileMetadata struct {
 	ContentLength uint64
 	AcceptRanges  bool
 	FileName      string
+}
+
+type Connection struct {
+	Index                uint
+	StartByte            uint64
+	EndByte              uint64
+	ByteLength           uint64
+	DownloadedBytesCount chan uint64
+	TmpFileName          string
 }
 
 func GetFileMetadata(url string) (res FileMetadata, err error) {
